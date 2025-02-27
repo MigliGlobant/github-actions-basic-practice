@@ -41,5 +41,5 @@ jobs:
               run: npm ci
             - name: Build project
               run: npm build
-            - name: Deploy project
+            - name: Deploy
               run: echo "Deploying ..."
