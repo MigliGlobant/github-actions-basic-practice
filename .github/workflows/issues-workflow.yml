@@ -1,0 +1,10 @@
+name: Issues_Workflow
+on:
+ issues:
+    types: [opened, edited, milestoned]
+jobs:
+    issue:
+        runs-on: ubuntu_latest
+        steps:
+            - name: issue_event
+              run: echo {{$"github"}}
