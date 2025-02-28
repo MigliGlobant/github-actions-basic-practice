@@ -4,7 +4,7 @@ on:
     types: [opened, edited, milestoned]
 jobs:
     issue:
-        runs-on: ubuntu_latest
+        runs-on: ubuntu-latest
         steps:
             - name: issue_event
               run: echo {{$"github"}}
