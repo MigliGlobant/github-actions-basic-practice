@@ -1,45 +1,41 @@
 name: deployment
-on: [push, workflow_dispatch]
+on: push
 jobs:
-    lint:
-        runs-on: ubuntu_latest
-        steps:
-            - name: Get the code
-              uses: actions/checkout@v3
-            - name: Install NodeJS
-              uses: actions/setup-node@v3
-              with:
-                node-version: 20
-            - name: Install dependencies
-              run: npm ci
-            - name: Run lint
-              run: npm lint
-    test:
-        runs-on: ubuntu_latest
-        steps:
-            - name: Get the code
-              uses: actions/checkout@v3
-            - name: Install NodeJS
-              uses: actions/setup-node@v3
-              with:
-                node-version: 20
-            - name: Install dependencies
-              run: npm ci
-            - name: Run tests
-              run: npm test
-    deploy:
-        needs: [lint, test]
-        runs-on: ubuntu_latest
-        steps:
-            - name: Get the code
-              uses: actions/checkout@v3
-            - name: Install NodeJS
-              uses: actions/setup-node@v3
-              with:
-                node-version: 20
-            - name: Install dependencies
-              run: npm ci
-            - name: Build project
-              run: npm build
-            - name: Deploy
-              run: echo "Deploying ..."
+  lint:
+    runs-on: ubuntu_latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Run lint
+        run: npm lint
+  test:
+    runs-on: ubuntu_latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v3
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+            node-version: 20
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test
+  deploy:
+      needs: test
+      runs-on: ubuntu_latest
+      steps:
+        - name: Get the code
+          uses: actions/checkout@v3
+        - name: Install NodeJS
+          uses: actions/setup-node@v3
+          with:
+            node-version: 20
+        - name: Install dependencies
+          run: npm ci
+        - name: Build project
+          run: npm build
+        - name: Deploy
+          run: echo "Deploying ..."
